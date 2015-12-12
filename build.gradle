@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+group = "spring-cd-aat"
+version = "1.0.0"
+
+description = "FX Rate service automated acceptance tests using selenium web driver"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath files("$projectDir/libs")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main.java.srcDir 'src'
+}
+
+dependencies {
+    compile(
+            'com.thoughtworks.gauge:gauge-java:+',
+            'org.seleniumhq.selenium:selenium-java:2.47.1',
+            'junit:junit:4.12'
+    )
+}
+
+def executeGauge() {
+    exec {
+        executable "gauge"
+        args "specs"
+    }
+}
+
+task copyLibs(type: Copy) {
+    from configurations.runtime
+    into "$projectDir/libs"
+}
+
+task gauge(dependsOn: 'copyLibs') {
+    doLast  {
+        executeGauge()
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.8'
+}
