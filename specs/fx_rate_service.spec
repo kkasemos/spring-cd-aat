@@ -1,10 +1,10 @@
-FX Rate Service Specification
+FX Rates Service Specification
 =============================
 
 The users must be able to see FX rates for a particular currency therefore; 
 they know how much money they need to exchange for that currency.
 
-Tags: FX rates
+Tags: FX Rates
 
 * User must open the FX Rates page
 
